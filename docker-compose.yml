@@ -1,0 +1,36 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:16
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin123
+      POSTGRES_DB: dd_proyectodb
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: dockerproject
+    volumes:
+      - .:/app
+    ports:
+      - "5000:5000"
+    environment:
+      DATABASE_URL: postgres://postgres:admin123@db:5432/dd_proyectodb
+      FLASK_ENV: development
+      DB_HOST: db
+      DB_NAME: dd_proyectodb
+      DB_USER: postgres
+      DB_PASSWORD: admin123
+    depends_on:
+      - db
+
+volumes:
+  db_data:
