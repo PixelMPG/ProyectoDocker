@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Fármacos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/farmacos.css') }}">
+</head>
+<body>
+    <div class="main-container">
+        <!-- Toolbar -->
+        <div class="toolbar">
+            <div class="toolbar-logo">
+                <img src="/static/images/fondo_medicamento_2.png" alt="Distribuidora de Fármacos" class="imagen-fondo">
+                <div class="alt-text">
+                    <strong>Distribuidora de Fármacos</strong>
+                </div>
+            </div>
+            <div class="toolbar-tools">
+                <a href="{{ url_for('empleados') }}">Empleados</a>
+                <a href="{{ url_for('farmacos') }}" class="active">Fármacos</a>
+                <a href="{{ url_for('farmacias') }}">Farmacias</a>
+            </div>
+        </div>
+        
+        <!-- Encabezado de página -->
+        <div class="page-header">
+            <h1 class="page-title">Gestión de Fármacos</h1>
+            <div class="page-actions">
+                <button class="action-btn" id="openLabModal">
+                    <i>🏭</i> Nuevo Laboratorio
+                </button>
+            </div>
+        </div>
+        
+        <!-- Layout principal -->
+        <div class="drugs-layout">
+            <!-- Formulario de fármacos -->
+            <div class="form-section">
+                <div class="form-header">
+                    <div class="lab-icon">💊</div>
+                    <h2>Registrar Nuevo Fármaco</h2>
+                </div>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">Nombre Comercial</label>
+                        <input type="text" id="nombreFarmaco" class="form-input" placeholder="Ej: Paracetamol">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Presentación</label>
+                        <input type="text" id="presentacionFarmaco" class="form-input" placeholder="Ej: Tabletas 500mg">
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">Efecto Principal</label>
+                        <input type="text" id="efectoFarmaco" class="form-input" placeholder="Ej: Analgésico, Antipirético">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Vía de Consumo</label>
+                        <input type="text" id="consumoFarmaco" class="form-input" placeholder="Ej: Oral, Intravenosa">
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">Precio (USD)</label>
+                        <input type="number" step="0.01" id="precioFarmaco" class="form-input" placeholder="0.00">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Laboratorio</label>
+                        <select class="select-input" id="laboratorioFarmaco">
+                            <option value="">Seleccione un laboratorio</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <button class="action-btn" style="width: 100%; margin-top: 10px;">
+                    <i>💾</i> Registrar Fármaco
+                </button>
+            </div>
+            
+            <!-- Tabla de fármacos -->
+            <div class="drugs-section">
+                <div class="drugs-header">
+                    <h2>Inventario de Fármacos</h2>
+                    <div class="drugs-controls">
+                        <input type="text" class="search-input" placeholder="Buscar fármacos...">
+                        <button class="action-btn">
+                            <i>🔍</i> Filtrar
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="drugs-table-container">
+                    <table class="drugs-table">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Presentación</th>
+                                <th>Efecto</th>
+                                <th>Vía</th>
+                                <th>Precio</th>
+                                <th>Laboratorio</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Paracetamol</td>
+                                <td>Tabletas 500mg</td>
+                                <td>Analgésico, Antipirético</td>
+                                <td>Oral</td>
+                                <td class="price-cell">$2.50</td>
+                                <td>LabGen</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal para laboratorios -->
+    <div class="modal-overlay" id="labModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Registrar Nuevo Laboratorio</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            
+            <form class="modal-form">
+                <div class="form-group">
+                    <label class="form-label">Nombre del Laboratorio</label>
+                    <input type="text" id="nombreModLab" class="form-input" placeholder="Ingrese el nombre">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Teléfono</label>
+                    <input type="text" id="telefonoModLab" class="form-input" placeholder="Número telefónico">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Dirección</label>
+                    <input type="text" id="direcciónModLab" class="form-input" placeholder="Dirección completa">
+                </div>
+                
+                <button class="action-btn" style="width: 100%;">
+                    <i>💾</i> Registrar Laboratorio
+                </button>
+            </form>
+        </div>
+    </div>
+    
+    <script src="/static/js/script_farmacos.js"></script>
+</body>
+</html>

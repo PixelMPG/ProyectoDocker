@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Farmacias</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/farmacias.css') }}">
+</head>
+<body>
+    <div class="main-container">
+        <!-- Toolbar -->
+        <div class="toolbar">
+            <div class="toolbar-logo">
+                <img src="/static/images/fondo_medicamento_2.png" alt="Distribuidora de Fármacos" class="imagen-fondo">
+                <div class="alt-text">
+                    <strong>Distribuidora de Fármacos</strong>
+                </div>
+            </div>
+            <div class="toolbar-tools">
+                <a href="{{ url_for('empleados') }}">Empleados</a>
+                <a href="{{ url_for('farmacos') }}">Fármacos</a>
+                <a href="{{ url_for('farmacias') }}" class="active">Farmacias</a>
+            </div>
+        </div>
+        
+        <!-- Encabezado de página -->
+        <div class="page-header">
+            <h1 class="page-title">Gestión de Farmacias</h1>
+        </div>
+        
+        <!-- Layout principal -->
+        <div class="pharmacies-layout">
+            <!-- Formulario de registro -->
+            <div class="form-section">
+                <div class="form-header">
+                    <div class="pharmacy-icon">🏥</div>
+                    <h2>Registrar Nueva Farmacia</h2>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Nombre de la Farmacia</label>
+                    <input type="text" class="form-input" placeholder="Ingrese el nombre de la farmacia" id="name_establishment">
+                </div>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">Ciudad</label>
+                        <input type="text" class="form-input" placeholder="Ciudad" id="city_establishment">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Dirección</label>
+                        <input type="text" class="form-input" placeholder="Dirección completa" id="address_establishment">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Teléfono de Contacto</label>
+                    <input type="text" class="form-input" placeholder="Número telefónico" id="number_establishment">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Número de Empleados</label>
+                    <input type="number" class="form-input" placeholder="Cantidad de empleados" id="num_employes" onchange="crear_elementos()">
+                </div>
+            </div>
+            
+            <!-- Sección de Stock -->
+            <div class="stock-section">
+                <div class="stock-header">
+                    <h2>Control de Stock</h2>
+                    <div class="stock-controls">
+                        <input type="text" class="search-input" placeholder="Buscar en stock...">
+                        <button class="action-btn" id="openStockModal">
+                            <i>📦</i> Nuevo Stock
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="stock-table-container">
+                    <table class="stock-table">
+                        <thead>
+                            <tr>
+                                <th>Medicamento</th>
+                                <th>Presentación</th>
+                                <th>Farmacia</th>
+                                <th>Laboratorio</th>
+                                <th>Cantidad</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Paracetamol</td>
+                                <td>Tabletas 500mg</td>
+                                <td>Sucursal Centro</td>
+                                <td>LabGen</td>
+                                <td>125</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Contenedor para registrar empleados -->
+        <div class="pharmacies-section">
+            <div class="form-header">
+                <div class="pharmacy-icon">🏪</div>
+                <h2>Empleados de la tienda</h2>
+            </div>
+            <!-- Contenedor para empleados -->
+            <div id="contenedor_farmacias" class="employees-container"></div>
+        </div>
+    </div>
+    
+    <!-- Modal para nuevo stock -->
+    <div class="modal-overlay" id="stockModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Registrar Nuevo Stock</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            
+            <form class="modal-form">
+                <div class="form-group">
+                    <label class="form-label">Farmacia</label>
+                    <select class="select-input" id="selectFarmacia">
+                        <option value="">Seleccione una farmacia</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Medicamento</label>
+                    <select class="select-input" id="selectMedicamento">
+                        <option value="">Seleccione un medicamento</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Cantidad</label>
+                    <input type="number" class="form-input" id="cantidadStock" placeholder="Ingrese la cantidad">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Laboratorio</label>
+                    <select class="select-input" id="selectLaboratorio">
+                        <option value="">Seleccione un laboratorio</option>
+                    </select>
+                </div>
+                
+                <button class="action-btn" style="width: 100%;">
+                    <i>💾</i> Guardar Stock
+                </button>
+            </form>
+        </div>
+    </div>
+    
+    <script src="/static/js/script_farmacias.js"></script>
+</body>
+</html>

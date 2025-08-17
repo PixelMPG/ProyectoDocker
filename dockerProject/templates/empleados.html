@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Empleados</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/empleados.css') }}">
+    <!--<link rel="stylesheet" href="{{ url_for('static', filename='css/farmacias.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/farmacos.css') }}">-->
+</head>
+<body>
+    <div class="main-container">
+        <!-- Toolbar -->
+        <div class="toolbar">
+            <div class="toolbar-logo">
+                <img src="/static/images/fondo_medicamento_2.png" alt="Distribuidora de Fármacos" class="imagen-fondo">
+                <div class="alt-text">
+                    <strong>Distribuidora de Fármacos</strong>
+                </div>
+            </div>
+            <div class="toolbar-tools">
+                <a href="{{ url_for('empleados') }}" class="active">Empleados</a>
+                <a href="{{ url_for('farmacos') }}">Fármacos</a>
+                <a href="{{ url_for('farmacias') }}">Farmacias</a>
+            </div>
+        </div>
+        
+        <!-- Panel de Filtros -->
+        <div class="filter-panel">
+            <h2>
+                <i>🔍</i> Buscar Empleados
+            </h2>
+            <div class="filter-controls">
+                <input type="text" placeholder="Buscar por nombre o apellido...">
+                <button>
+                    <i>👔</i> Encargados
+                </button>
+            </div>
+        </div>
+        
+        <!-- Tabla de Empleados -->
+        <div class="employees-table-container">
+            <table class="employees-table" id="employees-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Dirección</th>
+                        <th>Teléfono</th>
+                        <th>Puesto</th>
+                        <th>ID Sucursal</th>
+                        <!--<th>Acciones</th>-->
+                    </tr>
+                </thead>
+                <tbody>
+                    <!--<tr>
+                        <td>EMP-001</td>
+                        <td>María</td>
+                        <td>García</td>
+                        <td>Calle Principal 123</td>
+                        <td>555-1234</td>
+                        <td>Encargado</td>
+                        <td>FARM-001</td>
+                        <td>
+                            <button class="action-btn">✏️ Editar</button>
+                            <button class="action-btn">🗑️ Eliminar</button>
+                        </td>
+                    </tr>-->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="/static/js/script_empleados.js"></script>
+</body>
+</html>
