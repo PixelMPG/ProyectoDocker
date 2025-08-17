@@ -1,0 +1,81 @@
+**NOTA: Para crearlas necesitarias ingresar cada consulta CREATE 
+individualmente en la terminal del contenedor de la base de datos**
+-- =====================================
+-- TABLA: usuarios
+-- =====================================
+CREATE TABLE IF NOT EXISTS public.usuarios (
+    id_usu integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
+    nombre character varying(50) NOT NULL,
+    apellidos character varying(50) NOT NULL,
+    username character varying(50) NOT NULL,
+    correo character varying(100) NOT NULL,
+    password character varying(255) NOT NULL,
+    fecha_nac date NOT NULL,
+    fecha_alta time without time zone,
+    fecha_mod time without time zone,
+    CONSTRAINT usuarios_pkey PRIMARY KEY (id_usu)
+);
+
+-- Usuario de prueba
+INSERT INTO public.usuarios (
+    nombre, apellidos, username, correo, password, fecha_nac )
+VALUES ('admin', 'admin', 'ADMIN', 'admin@gmail.com', 'admin', '2004-05-27');
+
+-- =====================================
+-- TABLA: laboratorios
+-- =====================================
+CREATE TABLE IF NOT EXISTS public.laboratorios (
+    id_laboratorio SERIAL PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    direccion VARCHAR(200),
+    telefono VARCHAR(20)
+);
+
+-- =====================================
+-- TABLA: farmacias
+-- =====================================
+CREATE TABLE IF NOT EXISTS public.farmacias (
+    id_farmacia SERIAL PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    direccion VARCHAR(200),
+    ciudad VARCHAR(100),
+    telefono VARCHAR(20)
+);
+
+-- =====================================
+-- TABLA: empleados
+-- =====================================
+CREATE TABLE IF NOT EXISTS public.empleados (
+    id_empleado SERIAL PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL,
+    apellido VARCHAR(50) NOT NULL,
+    direccion VARCHAR(200),
+    telefono VARCHAR(20),
+    encargado BOOLEAN DEFAULT FALSE,
+    id_farmacia INT REFERENCES public.farmacias(id_farmacia) ON DELETE CASCADE
+);
+
+-- =====================================
+-- TABLA: farmacos
+-- =====================================
+CREATE TABLE IF NOT EXISTS public.farmacos (
+    id_farmaco SERIAL PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    presentacion VARCHAR(100),
+    efecto TEXT,
+    consumo TEXT,
+    precio DECIMAL(10,2),
+    id_laboratorio INT REFERENCES public.laboratorios(id_laboratorio) ON DELETE SET NULL
+);
+
+-- =====================================
+-- TABLA: stock
+-- =====================================
+CREATE TABLE IF NOT EXISTS public.stock (
+    id_stock SERIAL PRIMARY KEY,
+    id_farmacia INT REFERENCES public.farmacias(id_farmacia) ON DELETE CASCADE,
+    id_laboratorio INT REFERENCES public.laboratorios(id_laboratorio) ON DELETE CASCADE,
+    id_medicamento INT REFERENCES public.farmacos(id_farmaco) ON DELETE CASCADE,
+    presentacion_med VARCHAR(100),
+    stock_med INT NOT NULL DEFAULT 0
+);

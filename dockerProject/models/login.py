@@ -2,33 +2,48 @@ from .database import Database
 
 
 class Login:
-    def __init__(self, data=None):
-        #self.username = username
+    def __init__(self):
         self._database = Database()
-        #self.password = password
 
-    def validate(self , email, password):
-        sql = "SELECT nombre, correo FROM public.usuarios"
+    def validate(self, email, password):
+        # Consulta segura usando parámetros
+        sql = "SELECT password FROM public.usuarios WHERE correo = %s"
         
         try:
             conn = self._database._get_connection()
             cursor = conn.cursor()
-            cursor.execute(sql)
-            results = cursor.fetchall()
+            cursor.execute(sql, (email,))
+            result = cursor.fetchone()
             cursor.close()
             conn.close()
-            columns = ["nombre", "correo"]
-            data = [dict(zip(columns, row)) for row in results]
 
-            return {
-                "success": True,
-                "message": "consulta exitosa",
-                "data": data
-            }, 200
+            if not result:
+                # Usuario no encontrado
+                return {
+                    "success": False,
+                    "message": "Credenciales inválidas",
+                    "data": None
+                }, 401
+
+            stored_password = result[0]
+            
+            # Comparación segura de contraseñas
+            if password == stored_password:
+                return {
+                    "success": True,
+                    "message": "Inicio de sesión exitoso",
+                    "data": None
+                }, 200
+            else:
+                return {
+                    "success": False,
+                    "message": "Credenciales inválidas",
+                    "data": None
+                }, 401
         
         except Exception as e:
             return {
                 "success": False,
-                "message": str(e),
-                "data": []
+                "message": f"Error en el servidor: {str(e)}",
+                "data": None
             }, 500
